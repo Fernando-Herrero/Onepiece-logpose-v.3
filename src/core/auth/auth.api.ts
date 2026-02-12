@@ -5,6 +5,7 @@ import type {
     DeleteResponse,
     LoginPayload,
     LogoutResponse,
+    PostsResponse,
     RegisterPayload,
     StatsResponse,
     UserAuth,
@@ -115,62 +116,62 @@ export const getUserStatsApi = async (): Promise<StatsResponse> => {
     }
 };
 
-// export const getMyPostsApi = async (): Promise<PostsResponse> => {
-//     try {
-//         console.log("Obteniendo mis posts");
-//         const response = await api.get<PostsResponse>("/users/me/my-posts");
-//         console.log("Respuesta de la api", response);
+export const getMyPostsApi = async (): Promise<PostsResponse> => {
+    try {
+        console.log("Obteniendo mis posts");
+        const response = await api.get<PostsResponse>("/users/me/my-posts");
+        console.log("Respuesta de la api", response);
 
-//         return response.data;
-//     } catch (error: unknown) {
-//         const err = error as AxiosError<{ error: string }>;
-//         console.error("Error en getMyPostsApi:", err);
-//         const backendMessage = err.response?.data?.error || "Error al obtener mis posts";
-//         throw new Error(backendMessage);
-//     }
-// };
+        return response.data;
+    } catch (error: unknown) {
+        const err = error as AxiosError<{ error: string }>;
+        console.error("Error en getMyPostsApi:", err);
+        const backendMessage = err.response?.data?.error || "Error al obtener mis posts";
+        throw new Error(backendMessage);
+    }
+};
 
-// export const getMyLikedPostsApi = async (): Promise<PostsResponse> => {
-//     try {
-//         console.log("Obteniendo mis likes de posts");
-//         const response = await api.get<PostsResponse>("/users/me/liked-posts");
-//         console.log("Respuesta de la api", response);
+export const getMyLikedPostsApi = async (): Promise<PostsResponse> => {
+    try {
+        console.log("Obteniendo mis likes de posts");
+        const response = await api.get<PostsResponse>("/users/me/liked-posts");
+        console.log("Respuesta de la api", response);
 
-//         return response.data;
-//     } catch (error: unknown) {
-//         const err = error as AxiosError<{ error: string }>;
-//         console.error("Error en getMyLikedPostsApi:", err);
-//         const backendMessage = err.response?.data?.error || "Error al obtener mis likes posts";
-//         throw new Error(backendMessage);
-//     }
-// };
+        return response.data;
+    } catch (error: unknown) {
+        const err = error as AxiosError<{ error: string }>;
+        console.error("Error en getMyLikedPostsApi:", err);
+        const backendMessage = err.response?.data?.error || "Error al obtener mis likes posts";
+        throw new Error(backendMessage);
+    }
+};
 
-// export const getMyBookmarkedPostsApi = async (): Promise<PostsResponse> => {
-//     try {
-//         console.log("Obteniendo mis favoritos posts");
-//         const response = await api.get<PostsResponse>("/users/me/bookmarked-posts");
-//         console.log("Respuesta de la api", response);
+export const getMyBookmarkedPostsApi = async (): Promise<PostsResponse> => {
+    try {
+        console.log("Obteniendo mis favoritos posts");
+        const response = await api.get<PostsResponse>("/users/me/bookmarked-posts");
+        console.log("Respuesta de la api", response);
 
-//         return response.data;
-//     } catch (error: unknown) {
-//         const err = error as AxiosError<{ error: string }>;
-//         console.error("Error en getMyBookmarkedPostsApi:", err);
-//         const backendMessage = err.response?.data?.error || "Error al obtener mis favoritos posts";
-//         throw new Error(backendMessage);
-//     }
-// };
+        return response.data;
+    } catch (error: unknown) {
+        const err = error as AxiosError<{ error: string }>;
+        console.error("Error en getMyBookmarkedPostsApi:", err);
+        const backendMessage = err.response?.data?.error || "Error al obtener mis favoritos posts";
+        throw new Error(backendMessage);
+    }
+};
 
-// export const getMyCommentedPostsApi = async (): Promise<PostsResponse> => {
-//     try {
-//         console.log("Obteniendo mis comentarios posts");
-//         const response = await api.get<PostsResponse>("/users/me/commented-posts");
-//         console.log("Respuesta de la api", response);
+export const getMyCommentedPostsApi = async (): Promise<PostsResponse> => {
+    try {
+        console.log("Obteniendo mis comentarios posts");
+        const response = await api.get<PostsResponse>("/users/me/commented-posts");
+        console.log("Respuesta de la api", response);
 
-//         return response.data;
-//     } catch (error: unknown) {
-//         const err = error as AxiosError<{ error: string }>;
-//         console.error("Error en getMyCommentedPostsApi:", err);
-//         const backendMessage = err.response?.data?.error || "Error al obtener mis comentarios posts";
-//         throw new Error(backendMessage);
-//     }
-// };
+        return response.data;
+    } catch (error: unknown) {
+        const err = error as AxiosError<{ error: string }>;
+        console.error("Error en getMyCommentedPostsApi:", err);
+        const backendMessage = err.response?.data?.error || "Error al obtener mis comentarios posts";
+        throw new Error(backendMessage);
+    }
+};
