@@ -16,21 +16,31 @@ export const useAuth = () => {
     const { login: storeLogin, register: storeRegister, setUser, logout: logoutStore } = useAuthStore();
 
     const register = async (payload: RegisterPayload) => {
-        console.log("Registrando usuario", payload);
-        await storeRegister(payload);
-
-        router.push("/");
+        try {
+            console.log("Registrando usuario", payload);
+            await storeRegister(payload);
+            router.push("/");
+        } catch (error) {
+            console.error("Register failed:", error);
+            throw error;
+        }
     };
 
     const login = async (payload: LoginPayload) => {
-        console.log("Iniciando sesión:", payload);
-        await storeLogin(payload);
-        router.push("/");
+        try {
+            console.log("Iniciando sesión:", payload);
+            await storeLogin(payload);
+            router.push("/");
+        } catch (error) {
+            console.error("Login failed:", error);
+            throw error;
+        }
     };
 
     const logout = async () => {
+        //aqui no siempre limpiamos por lo tanto no try/catch
         console.log("Cerrando sesión");
-        await logoutStore();
+        await logoutStore(); // Siempre limpia
         router.push("/");
     };
 

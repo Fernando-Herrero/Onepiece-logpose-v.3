@@ -48,6 +48,8 @@ export const useAuthStore = create<AuthState>((set) => ({
             const authData = await loginApi(payload);
             saveTokenInCookies(authData.token);
             set({ user: authData.user, isAuthenticated: true });
+        } catch (error) {
+            throw error;
         } finally {
             set({ loading: false });
         }
@@ -59,6 +61,8 @@ export const useAuthStore = create<AuthState>((set) => ({
             const authData = await registerApi(payload);
             saveTokenInCookies(authData.token);
             set({ user: authData.user, isAuthenticated: true });
+        } catch (error) {
+            throw error;
         } finally {
             set({ loading: false });
         }
