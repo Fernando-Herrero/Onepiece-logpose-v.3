@@ -11,34 +11,27 @@ import type {
     UserAuth,
 } from "./auth.types";
 import { api } from "@/src/core/api/axios.instance";
+import { AppError } from "@/src/core/errors/appError";
 
-export const registerApi = async (user: RegisterPayload): Promise<AuthResponse> => {
+export const registerApi = async (payload: RegisterPayload): Promise<AuthResponse> => {
     try {
-        console.log("registerApi:", user);
-        const response = await api.post<AuthResponse>("/auth/register", user);
+        const response = await api.post<AuthResponse>("/auth/register", payload);
         console.log("respuesta de la api", response);
-
         return response.data;
     } catch (error: unknown) {
         const err = error as AxiosError<{ error: string }>;
-        console.error("Error en registerApi:", err);
-        const backendMessage = err.response?.data?.error || "Something went wrong";
-        throw new Error(backendMessage);
+        throw new AppError(err.response?.data?.error || "Register failed", err.response?.status);
     }
 };
 
-export const loginApi = async (user: LoginPayload): Promise<AuthResponse> => {
+export const loginApi = async (payload: LoginPayload): Promise<AuthResponse> => {
     try {
-        console.log("loginApi:", user);
-        const response = await api.post<AuthResponse>("/auth/login", user);
+        const response = await api.post<AuthResponse>("/auth/login", payload);
         console.log("respuesta de la api", response);
-
         return response.data;
     } catch (error: unknown) {
         const err = error as AxiosError<{ error: string }>;
-        console.error("Error en loginApi:", err);
-        const backendMessage = err.response?.data?.error || "Something went wrong";
-        throw new Error(backendMessage);
+        throw new AppError(err.response?.data?.error || "Login failed", err.response?.status);
     }
 };
 
@@ -51,12 +44,11 @@ export const logOutApi = async (): Promise<LogoutResponse> => {
         return response.data;
     } catch (error: unknown) {
         const err = error as AxiosError<{ error: string }>;
-        console.error("Error en logOutApi:", err);
-        const backendMessage = err.response?.data?.error || "Error al cerrar sesión";
-        throw new Error(backendMessage);
+        throw new AppError(err.response?.data?.error || "Logout failed", err.response?.status);
     }
 };
 
+//=====IR CHECKEANDO SEGUN VAYAMOS AÑADIENDOLAS=====
 export const deleteAccountApi = async (userId: string): Promise<DeleteResponse> => {
     try {
         console.log("Eliminando usuario", userId);
