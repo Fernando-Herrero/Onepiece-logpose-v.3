@@ -8,74 +8,31 @@ import { PostsResponse } from "./../core/auth/auth.types";
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/src/store/authStore";
-import { saveTokenInCookies } from "@/src/core/auth/auth.service";
 import { LoginPayload, RegisterPayload, UserAuth } from "@/src/core/auth/auth.types";
-import {
-    deleteAccountApi,
-    getProfileApi,
-    getUserStatsApi,
-    loginApi,
-    logOutApi,
-    registerApi,
-    updateProfileApi,
-} from "@/src/core/auth/auth.api";
+import { deleteAccountApi, getProfileApi, getUserStatsApi, updateProfileApi } from "@/src/core/auth/auth.api";
 
 export const useAuth = () => {
     const router = useRouter();
-    const { setUser, logout: logoutStore } = useAuthStore();
+    const { login: storeLogin, register: storeRegister, setUser, logout: logoutStore } = useAuthStore();
 
-    const register = useCallback(
-        async (user: RegisterPayload) => {
-            console.log("Registrando usuario", user);
+    const register = async (payload: RegisterPayload) => {
+        console.log("Registrando usuario", payload);
+        await storeRegister(payload);
 
-            try {
-                const authData = await registerApi(user);
+        router.push("/");
+    };
 
-                saveTokenInCookies(authData.token);
-                setUser(authData.user);
-                router.push("/");
-            } catch (error: unknown) {
-                const message = error instanceof Error ? error.message : String(error);
-                console.error("Register error", message);
-                throw new Error(message);
-            }
-        },
-        [setUser, router]
-    );
+    const login = async (payload: LoginPayload) => {
+        console.log("Iniciando sesión:", payload);
+        await storeLogin(payload);
+        router.push("/");
+    };
 
-    const login = useCallback(
-        async (user: LoginPayload) => {
-            console.log("Iniciando sesión:", user);
-
-            try {
-                const authData = await loginApi(user);
-
-                saveTokenInCookies(authData.token);
-                authData.user.isActive = true;
-                setUser(authData.user);
-                router.push("/");
-            } catch (error: unknown) {
-                const message = error instanceof Error ? error.message : String(error);
-                console.error("No se pudo hacer login", message);
-                throw new Error(message);
-            }
-        },
-        [setUser, router]
-    );
-
-    const logout = useCallback(async () => {
+    const logout = async () => {
         console.log("Cerrando sesión");
-
-        try {
-            await logOutApi();
-            logoutStore();
-            router.push("/");
-        } catch (error) {
-            console.error("Error en logout:", error);
-            logoutStore();
-            router.push("/");
-        }
-    }, [logoutStore, router]);
+        await logoutStore();
+        router.push("/");
+    };
 
     const deleteAccount = useCallback(
         async (userId: string) => {
