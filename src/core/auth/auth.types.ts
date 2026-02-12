@@ -105,36 +105,36 @@ export interface CommentResponse {
     id?: string;
 }
 
-// export interface PostResponse {
-//     _id?: string;
-//     id?: string;
-//     userId: UserPost;
-//     text: string;
-//     images: string[];
-//     likes: string[];
-//     bookmarks: string[];
-//     commentsCount: number;
-//     likesCount: number;
-//     bookmarksCount: number;
-//     hashtags: string[];
-//     mentions: string[];
-//     retweets: string[];
-//     retweetsCount: number;
-//     isRetweet: boolean;
-//     isReply: boolean;
-//     visibility: string;
-//     isPinned: boolean;
-//     isDeleted: boolean;
-//     language: string;
-//     createdAt: string;
-//     updatedAt: string;
-//     __v: number;
-//     userLiked: boolean;
-//     userBookmarked: boolean;
-//     comments?: CommentResponse[];
-// }
+export interface PostResponse {
+    _id?: string;
+    id?: string;
+    // userId: UserPost;
+    text: string;
+    images: string[];
+    likes: string[];
+    bookmarks: string[];
+    commentsCount: number;
+    likesCount: number;
+    bookmarksCount: number;
+    hashtags: string[];
+    mentions: string[];
+    retweets: string[];
+    retweetsCount: number;
+    isRetweet: boolean;
+    isReply: boolean;
+    visibility: string;
+    isPinned: boolean;
+    isDeleted: boolean;
+    language: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+    userLiked: boolean;
+    userBookmarked: boolean;
+    comments?: CommentResponse[];
+}
 
-// export type PostsResponse = PostResponse[];
+export type PostsResponse = PostResponse[];
 
 export type RegisterPayload = {
     name: string;
