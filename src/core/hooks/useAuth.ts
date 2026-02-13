@@ -1,15 +1,17 @@
-import {
-    getMyPostsApi,
-    getMyLikedPostsApi,
-    getMyBookmarkedPostsApi,
-    getMyCommentedPostsApi,
-} from "./../core/auth/auth.api";
-import { PostsResponse } from "./../core/auth/auth.types";
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/src/store/authStore";
-import { LoginPayload, RegisterPayload, UserAuth } from "@/src/core/auth/auth.types";
-import { deleteAccountApi, getProfileApi, getUserStatsApi, updateProfileApi } from "@/src/core/auth/auth.api";
+import { LoginPayload, PostsResponse, RegisterPayload, UserAuth } from "@/src/core/auth/auth.types";
+import {
+    deleteAccountApi,
+    getMyBookmarkedPostsApi,
+    getMyCommentedPostsApi,
+    getMyLikedPostsApi,
+    getMyPostsApi,
+    getProfileApi,
+    getUserStatsApi,
+    updateProfileApi,
+} from "@/src/core/auth/auth.api";
 
 export const useAuth = () => {
     const router = useRouter();
@@ -38,9 +40,9 @@ export const useAuth = () => {
     };
 
     const logout = async () => {
-        //aqui no siempre limpiamos por lo tanto no try/catch
+        //Aqui siempre limpiamos por lo tanto no try/catch
         console.log("Cerrando sesión");
-        await logoutStore(); // Siempre limpia
+        await logoutStore();
         router.push("/");
     };
 
