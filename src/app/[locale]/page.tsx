@@ -1,11 +1,12 @@
 "use client";
+
 import { DeviceType } from "@/src/types/device.types";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { BackUpPage } from "@/src/components/landing/BackUpPage";
-import { useDevice } from "@/src/core/hooks/useDevice";
+import { useDevice } from "@/src/hooks/useDevice";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +23,33 @@ const getIconSize = (device: DeviceType): number => {
     return sizeMap[device] || 16;
 };
 
+const maskMap: Record<DeviceType, string> = {
+    mobileXs: "30vh",
+    mobile: "30vh",
+    tablet: "35vh",
+    tabletXl: "40vh",
+    desktop: "40vh",
+    desktopXl: "40vh",
+} as const;
+
+const subTitle: Record<DeviceType, string> = {
+    mobileXs: "76vh",
+    mobile: "59vh",
+    tablet: "60vh",
+    tabletXl: "62vh",
+    desktop: "63vh",
+    desktopXl: "64vh",
+} as const;
+
+const heightDevice: Record<DeviceType, string> = {
+    mobileXs: "h-[400dvh]",
+    mobile: "h-[300dvh]",
+    tablet: "h-[270dvh]",
+    tabletXl: "h-[270dvh]",
+    desktop: "h-[200dvh]",
+    desktopXl: "h-[280dvh]",
+} as const;
+
 export default function Home() {
     const { isMobileXs, isMobile, isTablet, device } = useDevice();
 
@@ -30,37 +58,9 @@ export default function Home() {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const contentRef = useRef<HTMLElement>(null);
 
-    const maskMap: Record<DeviceType, string> = {
-        mobileXs: "30vh",
-        mobile: "30vh",
-        tablet: "35vh",
-        tabletXl: "40vh",
-        desktop: "40vh",
-        desktopXl: "40vh",
-    };
-
-    const subTitle: Record<DeviceType, string> = {
-        mobileXs: "76vh",
-        mobile: "59vh",
-        tablet: "60vh",
-        tabletXl: "62vh",
-        desktop: "63vh",
-        desktopXl: "64vh",
-    };
-
+    const heightContainer = heightDevice[device];
     const maskSettings = maskMap[device] || maskMap["tabletXl"];
     const subtitleSettings = subTitle[device];
-
-    const heightDevice: Record<DeviceType, string> = {
-        mobileXs: "h-[400dvh]",
-        mobile: "h-[300dvh]",
-        tablet: "h-[270dvh]",
-        tabletXl: "h-[270dvh]",
-        desktop: "h-[200dvh]",
-        desktopXl: "h-[200dvh]",
-    };
-
-    const heightContainer = heightDevice[device];
 
     const bgImage =
         isMobile || isMobileXs || isTablet
@@ -165,13 +165,18 @@ export default function Home() {
     }, [maskSettings, subtitleSettings]);
 
     return (
-        <div className={heightContainer}>
+        <div className={heightContainer} suppressHydrationWarning>
             <section ref={logoMask} className="fixed top-0 w-full h-screen logo-mask">
                 <picture ref={heroImgRef} className="w-full h-screen overflow-hidden fixed scale-120">
-                    <img className="w-full h-full object-cover" src={bgImage} alt="Crew Straw Hat" />
+                    <img
+                        className="w-full h-full object-cover"
+                        src={bgImage}
+                        alt="Crew Straw Hat"
+                        suppressHydrationWarning
+                    />
                 </picture>
 
-                <div className="absolute z-10 bottom-30 left-[50%] -translate-x-1/2 bg-gradient-card p-4 rounded-xl text center animate-bounce perfect-center">
+                <div className="absolute z-10 bottom-30 left-[50%] -translate-x-1/2 bg-gradient-card p-4 rounded-xl text-center animate-bounce perfect-center">
                     <p className="text-4xl font-family-pirate">SCROLL</p>
                     <Image
                         className="mx-auto"
@@ -182,6 +187,7 @@ export default function Home() {
                     />
                 </div>
             </section>
+
             <h2 ref={titleRef} className="title-glow text-subtitle">
                 LogPose
             </h2>

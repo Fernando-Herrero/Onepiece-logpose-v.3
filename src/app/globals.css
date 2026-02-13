@@ -1,26 +1,277 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+body.dark {
+    background: linear-gradient(135deg, var(--color-default) 80%, var(--color-card) 100%);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+    font-family: "OnePiece";
+    src: url("/fonts/OnePiece.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@font-face {
+    font-family: "RoadCaptain";
+    src: url("/fonts/RoadCaptain.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GreatVibes";
+    src: url("/fonts/GreatVibes.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Pricedown";
+    src: url("/fonts/Pricedown Bl.otf") format("otf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@theme {
+    /* COLORES DE FONDO */
+    --color-primary: #faf7f0;
+    --color-secondary: #ede8df;
+    --color-card: #fff;
+    --color-default: #414141b0;
+    --color-hover: #d4d6d8;
+    --color-orangeAce: #f0713f;
+    --color-orange: #f5a261;
+    --color-sunny: #fff3d6;
+
+    /* COLORES DE TEXTO */
+    --text-color-primary: #374151;
+    --text-color-secondary: #6b4f3b;
+    --text-color-muted: #7a7a7a;
+    --text-color-contrast: #ffffff;
+    --text-color-link: #3a93cf;
+
+    /* COLORES DE ACENTO Y BOTONES */
+    --color-accent: #f5a261;
+    --color-accentHover: #f78f3f;
+    --color-linePrimary: #a64242;
+    --color-lineDark: #732f2f;
+
+    /* FAMILIAS DE FUENTES */
+    --font-family-title: "OnePiece", serif;
+    --font-family-pirate: "RoadCaptain", sans-serif;
+    --font-family-decorative: "GreatVibes", cursive;
+    --font-family-body: "Pricedown", serif;
+
+    /* TAMAÑOS DE FUENTE */
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-base: 16px;
+    --text-lg: 18px;
+    --text-xl: 20px;
+    --text-2xl: 28px;
+    --text-subtitle: 40px;
+
+    /* ESPACIADO */
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-4: 16px;
+    --spacing-6: 24px;
+    --spacing-8: 32px;
+
+    /* DIMENSIONES DE CONTENEDORES */
+    --width-container: 95%;
+    --max-width-container: 800px;
+    --rounded: 6px;
+    --padding-section: 2rem;
+    --padding-card: 1rem;
+
+    /* SOMBRAS Y EFECTOS */
+    --color-overlay: rgba(0, 0, 0, 0.8);
+    --shadow-white: 0px 0px 20px 2px rgba(255, 255, 255, 0.8);
+    --shadow-default: 0px 2px 6px 1px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-button: 0 2px 4px rgba(0, 0, 0, 0.64);
+
+    /* TRANSICIONES */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-default: 0.4s ease-in-out;
+}
+
+@layer components {
+    .card {
+        @apply flex flex-col gap-4 rounded-xl shadow border border-white/60 backdrop-blur-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5;
+    }
+}
+
+.floating-btn {
+    @apply fixed z-25 bottom-12 right-2 transition duration-300 hover:-translate-y-0.5 
+        flex items-center justify-center w-10 h-10 rounded-full overflow-hidden 
+        border border-white/30 shadow-default cursor-pointer sm:right-8;
+}
+
+.title-glow {
+    @apply text-[#c9a066] tracking-wider -mt-8;
+    text-shadow:
+        2px 2px 0px #3b2f2f,
+        -1px -1px 0px #3b2f2f,
+        1px -1px 0px #3b2f2f,
+        -1px 1px 0px #3b2f2f,
+        0 0 15px #c9a066,
+        0 0 25px rgba(201, 160, 102, 0.4);
+}
+
+.btn {
+    @apply self-center py-1 px-1.5 min-w-20 rounded cursor-pointer 
+        transition-all duration-200 ease-in-out appearance-none relative 
+        shadow-button;
+}
+
+.btn:hover {
+    @apply -translate-y-0.5 border-lineDark;
+}
+
+.bg-gradient-primary {
+    @apply bg-linear-to-br from-secondary/70 to-orange/30;
+}
+
+.bg-gradient-card {
+    @apply bg-linear-to-br from-secondary/80 via-orange/40 to-orangeAce/50;
+}
+
+.perfect-center {
+    @apply flex flex-col items-center;
+}
+
+.no-focus:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 145, 255, 0.374);
+}
+
+.text-gradient {
+    @apply bg-linear-to-br from-gray-900 to-gray-500 bg-clip-text text-transparent filter brightness-150;
+}
+
+.text-gradient-secondary {
+    @apply bg-linear-to-br from-orange-600 to-orange-800 bg-clip-text text-transparent;
+}
+
+.logo-mask {
+    background: black;
+    mask-image: url("/images/onepiece-mask.svg");
+    mask-repeat: no-repeat;
+}
+
+.img-map {
+    border: 4px dashed #b58900;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 90% 100%, 0% 100%);
+}
+
+.dropdown-panel {
+    @apply z-50 overflow-hidden bg-sunny rounded-xl shadow-lg p-3 hover:shadow-2xl;
+}
+
+.dropdown-sm {
+    @apply w-38;
+}
+
+.dropdown-md {
+    @apply w-64;
+}
+
+.underline-hover {
+    @apply relative after:block after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orangeAce/30 after:transition-all after:duration-300 group-hover:after:w-full;
+}
+
+.drop-item-style {
+    @apply py-0.5 px-2 rounded-lg transition hover:bg-orangeAce/10;
+}
+
+progress::-webkit-progress-bar {
+    background-color: transparent;
+}
+progress::-webkit-progress-value {
+    background-color: #3b82f6;
+    transition: width 0.3s;
+}
+
+progress::-moz-progress-bar {
+    background-color: #3b82f6;
+}
+
+.card-content {
+    @apply max-w-md w-[82vw] sm:min-w-xs;
+}
+
+/* DARK THEME */
+.dark {
+    /* Colores de fondo */
+    --color-primary: #1d2026;
+    --color-secondary: #30363f;
+    --color-card: #2d3142;
+    --color-default: #3d4357;
+    --color-hover: #3d4357;
+    --color-orangeAce: #d0c0b9;
+    --color-orange: #ffab6b;
+    --color-sunny: #32322f;
+
+    /* Colores de texto */
+    --text-color-primary: #ffffff;
+    --text-color-secondary: #c9a066;
+    --text-color-muted: #b5bbc4;
+    --text-color-contrast: #1a1d29;
+    --text-color-link: #60a5fa;
+
+    /* Colores de acento */
+    --color-accent: #ffab6b;
+    --color-accentHover: #ff9855;
+    --color-linePrimary: #d55555;
+    --color-lineDark: #a64242;
+
+    /* Sombras */
+    --color-overlay: rgba(0, 0, 0, 0.9);
+    --shadow-white: 0px 0px 20px 2px rgba(255, 171, 107, 0.3);
+    --shadow-default: 0px 2px 6px 1px rgba(0, 0, 0, 0.6);
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-button: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.dark .bg-gradient-primary {
+    @apply bg-linear-to-br from-primary/70 to-secondary/70;
+}
+
+.dark .bg-gradient-card {
+    @apply bg-linear-to-br from-primary/80 via-secondary/90 to-card;
+}
+
+.dark .text-gradient {
+    @apply bg-linear-to-br from-gray-100 to-gray-400 bg-clip-text text-transparent;
+}
+
+.dark .logo-mask {
+    background: #fff;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
 }

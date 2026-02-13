@@ -3,7 +3,6 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Geist } from "next/font/google";
 import { AppInitializer } from "@/src/components/providers/AppInitializer";
-import "@/src/app/globals.css";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -14,16 +13,18 @@ const locales = ["es", "en", "ja"];
 
 export default async function LocaleLayout({
     children,
-    params: { locale },
+    params,
 }: {
     children: React.ReactNode;
-    params: { locale: string };
+    params: Promise<{ locale: string }>;
 }) {
+    const { locale } = await params;
+
     if (!locales.includes(locale)) {
         notFound();
     }
 
-    const messages = await getMessages({ locale });
+    const messages = await getMessages();
 
     return (
         <html lang={locale}>

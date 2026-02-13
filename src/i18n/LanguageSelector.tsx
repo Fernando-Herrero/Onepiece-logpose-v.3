@@ -1,8 +1,8 @@
 "use client";
 
 import { DropDown } from "@/src/components/shared/Dropdown";
-import { useClickOutside } from "@/src/core/hooks/useClickOutside";
-import { useToggle } from "@/src/core/hooks/useToggle";
+import { useClickOutside } from "@/src/hooks/useClickOutside";
+import { useToggle } from "@/src/hooks/useToggle";
 import { useTranslate } from "@/src/i18n/useTranslate";
 import type { DropDownAlign, DropDownPlacement } from "@/src/types/dropdown.types";
 
