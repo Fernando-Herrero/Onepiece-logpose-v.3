@@ -3,6 +3,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Geist } from "next/font/google";
 import { AppInitializer } from "@/src/components/providers/AppInitializer";
+import "@/src/app/globals.css";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -22,7 +23,7 @@ export default async function LocaleLayout({
         notFound();
     }
 
-    const messages = await getMessages();
+    const messages = await getMessages({ locale });
 
     return (
         <html lang={locale}>

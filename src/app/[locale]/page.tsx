@@ -1,10 +1,11 @@
 "use client";
-import { useDevice } from "@/src/hooks/useDevice";
 import { DeviceType } from "@/src/types/device.types";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { BackUpPage } from "@/src/components/landing/BackUpPage";
+import { useDevice } from "@/src/core/hooks/useDevice";
 
 gsap.registerPlugin(ScrollTrigger);
 
