@@ -1,12 +1,15 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
-export const useTranslate = () => {
+export const useTranslate = (namespace: string) => {
     const locale = useLocale();
     const router = useRouter();
+    const translations = useTranslations(namespace);
+
+    const t = (key: string) => translations(key);
 
     const i18n = {
         language: locale,
@@ -26,8 +29,5 @@ export const useTranslate = () => {
         },
     };
 
-    return {
-        t: (key: string) => key,
-        i18n,
-    };
+    return { t, i18n };
 };
