@@ -3,8 +3,10 @@
 import { DropDown } from "@/src/components/shared/Dropdown";
 import { useClickOutside } from "@/src/hooks/useClickOutside";
 import { useToggle } from "@/src/hooks/useToggle";
-import { useTranslate } from "@/src/i18n/useTranslate";
-import type { DropDownAlign, DropDownPlacement } from "@/src/types/dropdown.types";
+import { locales, type Locale } from "@/src/i18n/config";
+import { DropDownAlign, DropDownPlacement } from "@/src/types/dropdown.types";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface LanguageSelectorProps {
     placement: DropDownPlacement;
@@ -13,22 +15,26 @@ interface LanguageSelectorProps {
 
 type LanguageCode = "es" | "en" | "ja";
 
+const languagesMap: Record<Locale, { flag: string; label: string }> = {
+    es: { flag: "🇪🇸", label: "Español" },
+    en: { flag: "🇬🇧", label: "English" },
+    ja: { flag: "🇯🇵", label: "日本語" },
+};
+
 export const LanguageSelector = ({ placement, align }: LanguageSelectorProps) => {
-    const { i18n } = useTranslate();
-    const languages = Object.keys(i18n.options.resources || {}) as LanguageCode[];
+    const router = useRouter();
+    const pathname = usePathname();
+
     const [isOpen, toggleMenu, closeMenu] = useToggle();
-    const menuRef: React.RefObject<HTMLDivElement | null> = useClickOutside(toggleMenu, isOpen);
-    const currentLanguage = i18n.language as LanguageCode;
+    const menuRef: React.RefObject<HTMLDivElement | null> = useClickOutside(closeMenu, isOpen);
 
-    const languagesMap: Record<LanguageCode, { flag: string; label: string }> = {
-        es: { flag: "🇪🇸", label: "Español" },
-        en: { flag: "🇬🇧", label: "English" },
-        ja: { flag: "🇯🇵", label: "日本語" },
-    };
+    const currentLanguage = (pathname.split("/")[1] as LanguageCode) || "en";
 
-    const handleLanguage = (language: LanguageCode) => {
-        i18n.changeLanguage(language);
-        toggleMenu();
+    const handleLanguage = (language: Locale) => {
+        const pathWithoutLocale = pathname.replace(/^\/(en|es|ja)/, "");
+
+        router.push(`/${language}${pathWithoutLocale}`);
+        closeMenu();
     };
 
     return (
@@ -44,7 +50,7 @@ export const LanguageSelector = ({ placement, align }: LanguageSelectorProps) =>
 
             <DropDown open={isOpen} onClose={closeMenu} size="sm" placement={placement} align={align}>
                 <div className="flex flex-col">
-                    {languages.map((language) => (
+                    {locales.map((language) => (
                         <button
                             key={language}
                             onClick={() => handleLanguage(language)}

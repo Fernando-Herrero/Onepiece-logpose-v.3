@@ -2,7 +2,7 @@
 
 import { DeviceType } from "@/src/types/device.types";
 import gsap from "gsap";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { BackUpPage } from "@/src/components/landing/BackUpPage";
@@ -62,10 +62,11 @@ export default function Home() {
     const maskSettings = maskMap[device] || maskMap["tabletXl"];
     const subtitleSettings = subTitle[device];
 
-    const bgImage =
-        isMobile || isMobileXs || isTablet
+    const bgImage = useMemo(() => {
+        return isMobile || isMobileXs || isTablet
             ? "/images/backgrounds/home-mobile-bgMask.webp"
             : "/images/backgrounds/home-bgMask.avif";
+    }, [isMobile, isMobileXs, isTablet]);
 
     const iconSize = getIconSize(device);
 
