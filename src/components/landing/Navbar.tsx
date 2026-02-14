@@ -1,9 +1,5 @@
 "use client";
 
-import cardsIcon from "@/icons/cards-icon.svg";
-import profileIcon from "@/icons/home-icon.svg";
-import serieIcon from "@/icons/serie-icon.svg";
-import socialIcon from "@/icons/social-icon.svg";
 import { NavbarItems } from "@/src/components/landing/NavbarItems";
 import { useAuthStore } from "@/src/store/authStore";
 import { NavItem } from "@/src/types/navbar.types";
@@ -12,6 +8,11 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+const cardsIcon = "/icons/cards-icon.svg";
+const profileIcon = "/icons/home-icon.svg";
+const serieIcon = "/icons/serie-icon.svg";
+const socialIcon = "/icons/social-icon.svg";
 
 const navItems: NavItem[] = [
     {
@@ -92,7 +93,7 @@ export const Navbar = ({ toggleMenu }: NavbarProps) => {
                         >
                             {icon && (
                                 <Image
-                                    src={icon ? icon : ""}
+                                    src={icon}
                                     alt={`${t(label)} icon`}
                                     width={24}
                                     height={24}

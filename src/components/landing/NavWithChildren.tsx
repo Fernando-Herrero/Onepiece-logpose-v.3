@@ -1,4 +1,5 @@
-import rightArrow from "@/icons/right-arrow.svg";
+"use client";
+
 import { ToggleButton } from "@/src/components/shared/ToggleButton";
 import { useToggle } from "@/src/hooks/useToggle";
 import { NavItemDropdown } from "@/src/types/navbar.types";
@@ -8,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
+const rightArrow = "icons/right-arrow.svg";
 interface NavWithChildren {
     item: NavItemDropdown;
     toggleMenu?: () => void;
@@ -46,7 +48,7 @@ export const NavWithChildren = ({ item, toggleMenu }: NavWithChildren) => {
             })}
         >
             <header className="flex items-center justify-between cursor-pointer md:gap-1" onClick={toggleBox}>
-                <p className="font-bold">{t(`navbar.${item.label}`)}</p>
+                <p className="font-bold">{t(item.label)}</p>
                 <ToggleButton isOpen={open} />
             </header>
 
@@ -68,7 +70,7 @@ export const NavWithChildren = ({ item, toggleMenu }: NavWithChildren) => {
                             onClick={toggleMenu}
                         >
                             <p className="relative md:after:block md:after:absolute md:after:left-0 md:after:bottom-0 md:after:h-0.5 md:after:w-0 md:after:bg-orangeAce/30 after:transition-all after:duration-300 group-hover:after:w-full">
-                                {t(`navbar.${child.label}`)}
+                                {t(child.label)}
                             </p>
                             <Image
                                 className="w-4 md:hidden"
