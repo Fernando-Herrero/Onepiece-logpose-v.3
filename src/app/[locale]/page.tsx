@@ -46,7 +46,7 @@ const heightDevice: Record<DeviceType, string> = {
     mobile: "h-[300dvh]",
     tablet: "h-[270dvh]",
     tabletXl: "h-[270dvh]",
-    desktop: "h-[200dvh]",
+    desktop: "h-[260dvh]",
     desktopXl: "h-[280dvh]",
 } as const;
 

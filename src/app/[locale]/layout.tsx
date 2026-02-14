@@ -27,13 +27,11 @@ export default async function LocaleLayout({
     const messages = await getMessages();
 
     return (
-        <html lang={locale}>
-            <body className={geistSans.variable}>
-                <NextIntlClientProvider messages={messages}>
-                    <AppInitializer />
-                    {children}
-                </NextIntlClientProvider>
-            </body>
-        </html>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+            <div className={geistSans.variable}>
+                <AppInitializer />
+                {children}
+            </div>
+        </NextIntlClientProvider>
     );
 }
