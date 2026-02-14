@@ -10,24 +10,18 @@ export const useTranslate = (namespace: string) => {
     const translations = useTranslations(namespace);
 
     const t = (key: string) => translations(key);
+    const changeLanguage = (newLocale: string) => {
+        Cookies.set("NEXT_LOCALE", newLocale, { expires: 365 });
 
-    const i18n = {
-        language: locale,
-        changeLanguage: (newLocale: string) => {
-            Cookies.set("NEXT_LOCALE", newLocale, { expires: 365 });
+        const currentPath = window.location.pathname;
+        const newPath = currentPath.replace(`/${locale}`, `/${newLocale}`);
 
-            const currentPath = window.location.pathname;
-            const newPath = currentPath.replace(`/${locale}`, `/${newLocale}`);
-            router.push(newPath);
-        },
-        options: {
-            resources: {
-                es: {},
-                en: {},
-                ja: {},
-            },
-        },
+        router.push(newPath);
     };
 
-    return { t, i18n };
+    return {
+        t,
+        locale,
+        changeLanguage,
+    };
 };
