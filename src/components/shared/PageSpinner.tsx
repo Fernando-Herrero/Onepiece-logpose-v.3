@@ -1,5 +1,7 @@
 import { Text } from "@/src/components/shared/ErrorBoundary/Text";
+import { LoadingDots } from "@/src/components/shared/LoadingDots";
 import { Spinner } from "@/src/components/shared/Spinner";
+import { useTranslations } from "next-intl";
 
 export type PageSpinnerSizes = "xl" | "sm" | "md" | "lg";
 
@@ -24,7 +26,7 @@ export const PageSpinner = ({
     containerClassName = "",
     showDots = false,
 }: PageSpinnerProps) => {
-    const { t } = useTranslate();
+    const t = useTranslations("page_spinner");
     const baseContainerClasses = "flex items-center justify-center";
 
     const containerClasses = fullPage
@@ -37,7 +39,7 @@ export const PageSpinner = ({
                 <Spinner size={size} color={color} className={`mx-auto ${className}`} />
                 {message && (
                     <Text weight="medium" color="muted" className="mt-4">
-                        {message || t("page_spinner.default_message")} {showDots && <LoadingDots />}
+                        {message || t("default_message")} {showDots && <LoadingDots />}
                     </Text>
                 )}
             </div>
